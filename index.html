@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点名器</title>
+    <style>
+        #box{
+            width: 800px;
+            margin: 20px auto;
+            text-align: center;
+           
+        }
+        #table{
+            margin-bottom: 20px;
+        }
+        button{
+            cursor: pointer;
+            width: 80px;
+            height: 36px;
+            border: 0px;
+            background-color:purple;
+            color: #Fff;      
+        }
+        .active{
+            background-color: pink;
+            color: #fff;
+        }
+        .tdall{
+            color: black;
+            background: #Fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <h2>在线点名器</h2>
+        <table id="table"></table>
+        <button id="btnS" >开始</button>
+        <button id="btnE" disabled>结束</button>
+    </div>
+</body>
+<script>
+    //设置初始化界面所需代码
+    var arr = ['陈Xx','黄XX','龙xx','无Xx','武XX','疯xx','特Xx','那XX','年xx','测Xx',
+    '关Xx','公XX','张xx','何Xx','杨XX','江xx','邓Xx','叶XX','脦xx','测试x',
+    '陈Xx','黄XX','龙xx','无Xx','武XX','疯xx','特Xx','那XX','年xx','测Xx',
+    '陈Xx','黄XX','龙xx','无Xx','武XX','疯xx','特Xx','那XX','年xx','测Xx'];
+    var arr2 = Array();
+    var oBox = document.getElementById('box'); 
+    var oTable = document.getElementById('table');
+    var btnS = document.getElementById('btnS');
+    var btnE = document.getElementById('btnE');
+    var timer;
+    var selec;
+    for(var i =1; i<=arr.length;i++){
+        if((i-1)%10==0 || i==1){
+           var oTr = document.createElement('tr');
+           oTable.appendChild(oTr);
+        }
+        arr2[i-1] = 'id'+(i-1);
+        var oTd = document.createElement('td');
+            oTr.appendChild(oTd);
+            oTd.style.width = '80px';
+            oTd.style.height = '36px';
+            oTd.style.lineHeight = '36px';
+            oTd.innerHTML = arr[i-1];
+            oTd.setAttribute('id','id'+(i-1));
+        
+    }
+    
+    
+    //console.log();
+    var deli;
+    btnS.onclick = function(){
+        clearInterval(timer);
+        if(arr2.length <=0){
+            return;
+        }
+        btnE.removeAttribute('disabled');
+        var tdAll = document.getElementsByTagName('td');
+        timer = setInterval(function(){
+            var rand = Math.ceil(Math.random()*arr2.length);
+            for(var j = 0; j<arr2.length;j++){
+               // console.log(tdAll[i],i);
+                // tdAll[j].className = 'tdall'
+                document.getElementById(arr2[j]).className = 'tdall';
+            }
+            // console.log('1');
+            selec =  document.getElementById(arr2[rand-1]);
+            selec.className =  'active';
+            deli = rand-1;
+            //var tdAll = document.getElementsByName('td');
+        },200);
+    }
+    btnE.onclick = function(){
+        clearInterval(timer);
+       // btnE.setttribute('disabled');
+       btnE.setAttribute('disabled','disabled');
+     
+        arr2.splice(deli,1);
+        // var active = document.getElementsByClassName('active');
+        // arr.splice();
+    }
+
+  
+    
+</script>
+</html>
